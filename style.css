@@ -1,0 +1,647 @@
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --bg-primary: #ffffff;
+  --bg-sidebar: #f3f2f1;
+  --bg-email-hover: #edebe9;
+  --bg-email-active: #deecf9;
+  --bg-header: #0078d4;
+  --bg-panel: #faf9f8;
+  --text-primary: #323130;
+  --text-secondary: #605e5c;
+  --text-light: #a19f9d;
+  --border: #e1dfdd;
+  --accent: #0078d4;
+  --accent-hover: #106ebe;
+  --unread-dot: #0078d4;
+  --danger: #d13438;
+  --success: #107c10;
+}
+
+body {
+  font-family: 'Segoe UI', -apple-system, BlinkMacSystemFont, sans-serif;
+  background: var(--bg-primary);
+  color: var(--text-primary);
+  height: 100vh;
+  overflow: hidden;
+}
+
+.hidden { display: none !important; }
+
+/* ─── INTRO ─────────────────────────────────── */
+#introScreen {
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(135deg, #0078d4 0%, #004578 100%);
+}
+
+#introBox {
+  background: white;
+  padding: 48px;
+  border-radius: 8px;
+  text-align: center;
+  width: 400px;
+  box-shadow: 0 16px 48px rgba(0,0,0,0.25);
+}
+
+#introBox h1 { font-size: 28px; color: var(--accent); margin-bottom: 12px; }
+#introBox p  { color: var(--text-secondary); margin-bottom: 24px; line-height: 1.5; }
+
+#introBox input {
+  width: 100%;
+  padding: 10px 14px;
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  font-size: 15px;
+  font-family: inherit;
+  margin-bottom: 12px;
+  outline: none;
+  transition: border 0.2s;
+}
+#introBox input:focus { border-color: var(--accent); }
+
+#introBox button {
+  width: 100%;
+  background: var(--accent);
+  color: white;
+  border: none;
+  padding: 12px;
+  border-radius: 4px;
+  font-size: 15px;
+  font-family: inherit;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+#introBox button:hover { background: var(--accent-hover); }
+#introDesc { font-size: 12px; color: var(--text-light); margin-top: 16px; margin-bottom: 0; }
+
+/* ─── LAYOUT ─────────────────────────────────── */
+#app {
+  display: grid;
+  grid-template-columns: 280px 1fr;
+  grid-template-rows: 48px 1fr;
+  height: 100vh;
+}
+
+#topBar {
+  grid-column: 1 / -1;
+  grid-row: 1;
+  background: var(--bg-header);
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 20px;
+  font-size: 14px;
+  font-weight: 600;
+  letter-spacing: 0.3px;
+}
+
+/* ─── SIDEBAR ────────────────────────────────── */
+#sidebar {
+  grid-column: 1;
+  grid-row: 2;
+  background: var(--bg-sidebar);
+  border-right: 1px solid var(--border);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+#sidebarHeader {
+  padding: 16px 14px 10px;
+  font-size: 18px;
+  font-weight: 600;
+  border-bottom: 1px solid var(--border);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+#sidebarHeader span:last-child { font-size: 12px; color: var(--accent); font-weight: 400; }
+
+#emailList { list-style: none; flex: 1; overflow-y: auto; }
+
+#emailList li {
+  padding: 12px 14px 12px 18px;
+  border-bottom: 1px solid var(--border);
+  cursor: pointer;
+  transition: background 0.15s;
+  position: relative;
+}
+#emailList li:hover  { background: var(--bg-email-hover); }
+#emailList li.active { background: var(--bg-email-active); }
+
+#emailList li.unread::before {
+  content: '';
+  position: absolute;
+  left: 5px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--unread-dot);
+}
+
+.emailListSubject {
+  font-size: 13px;
+  font-weight: 600;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  margin-bottom: 3px;
+  padding-right: 48px;
+}
+.emailListFrom {
+  font-size: 12px;
+  color: var(--text-secondary);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.emailListPreview {
+  font-size: 11px;
+  color: var(--text-light);
+  margin-top: 3px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.emailListDate {
+  position: absolute;
+  right: 10px;
+  top: 12px;
+  font-size: 11px;
+  color: var(--text-light);
+}
+.emailSolved .emailListSubject::after { content: '  [SOLVED]'; color: var(--success); font-size: 11px; }
+
+#sidebarStats {
+  padding: 12px 14px;
+  border-top: 1px solid var(--border);
+  display: flex;
+  justify-content: space-between;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--accent);
+}
+
+/* ─── MAIN PANEL ─────────────────────────────── */
+#mainPanel {
+  grid-column: 2;
+  grid-row: 2;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+/* ─── EMAIL WRAPPER (body + headers) ─────────── */
+#emailWrapper {
+  display: flex;
+  flex: 1;
+  overflow: hidden;
+  border-bottom: 1px solid var(--border);
+  min-height: 0;
+}
+
+#emailContent {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  overflow: hidden;
+  min-width: 0;
+}
+
+#emailHeader {
+  padding: 20px 32px 16px;
+  border-bottom: 1px solid var(--border);
+  flex-shrink: 0;
+}
+#emailSubject { font-size: 20px; font-weight: 600; margin-bottom: 8px; }
+#emailMeta    { display: flex; gap: 24px; font-size: 13px; color: var(--text-secondary); }
+
+#emailBody {
+  flex: 1;
+  padding: 28px 32px;
+  overflow-y: auto;
+  font-size: 14px;
+  line-height: 1.6;
+  max-width: 700px;
+}
+
+#emailPlaceholder { color: var(--text-light); font-style: italic; margin-top: 40px; text-align: center; }
+
+/* ─── HEADERS PANEL (right side) ─────────────── */
+#headersPanel {
+  width: 800px;
+  flex-shrink: 0;
+  border-left: 2px solid var(--accent);
+  background: #1e1e1e;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+#headersPanelTitle {
+  background: var(--accent);
+  color: white;
+  padding: 8px 14px;
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  flex-shrink: 0;
+}
+
+#emailHeaderRaw {
+  flex: 1;
+  padding: 14px;
+  font-family: 'Courier New', monospace;
+  font-size: 11px;
+  color: #d4d4d4;
+  white-space: pre-wrap;
+  overflow-y: auto;
+  line-height: 1.6;
+  margin: 0;
+}
+
+/* ─── EMAIL BODY ELEMENTS ────────────────────── */
+.email-sender-banner {
+  background: #fff4ce;
+  border: 1px solid #f7ca00;
+  border-radius: 4px;
+  padding: 10px 14px;
+  margin-bottom: 16px;
+  font-size: 12px;
+  color: #7a5e00;
+}
+.email-link  { color: var(--accent); text-decoration: underline; cursor: pointer; word-break: break-all; }
+.email-cta   { display: inline-block; cursor: pointer; }
+.email-warning {
+  background: #fde7e9;
+  border-left: 4px solid var(--danger);
+  padding: 10px 14px;
+  margin-top: 16px;
+  font-size: 12px;
+  color: var(--danger);
+  border-radius: 0 4px 4px 0;
+}
+
+/* ─── ANALYSIS PANEL ─────────────────────────── */
+#analysisPanel {
+  flex-shrink: 0;
+  padding: 8px 32px;
+  border-top: 2px solid var(--accent);
+  background: var(--bg-panel);
+  overflow-y: auto;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  column-gap: 24px;
+  row-gap: 0;
+  align-content: start;
+}
+
+#analysisPanel h3 {
+  grid-column: 1 / -1;
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--text-secondary);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  margin-bottom: 6px;
+}
+
+.tool {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 6px;
+  flex-wrap: nowrap;
+}
+.tool label {
+  font-size: 12px;
+  font-weight: 600;
+  min-width: 110px;
+  white-space: nowrap;
+}
+.toolInput { display: flex; gap: 6px; flex: 1; }
+.toolInput input {
+  flex: 1;
+  padding: 5px 10px;
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  font-size: 12px;
+  font-family: 'Courier New', monospace;
+  outline: none;
+  transition: border 0.2s;
+}
+.toolInput input:focus { border-color: var(--accent); }
+
+.tool button, #toggleHeaders, #metaBtn {
+  background: var(--accent);
+  color: white;
+  border: none;
+  padding: 5px 12px;
+  border-radius: 4px;
+  font-size: 12px;
+  font-family: inherit;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: background 0.2s;
+}
+.tool button:hover, #toggleHeaders:hover, #metaBtn:hover { background: var(--accent-hover); }
+
+#flagFeedback, #senderFeedback, #urlFeedback, #decodeFeedback, #metaFeedback {
+  font-size: 11px;
+  font-weight: 600;
+  padding: 2px 0;
+  width: 100%;
+}
+
+.feedback-ok   { color: var(--success); }
+.feedback-err  { color: var(--danger); }
+.feedback-info { color: var(--accent); }
+
+/* ─── Sender colored output ──────────────────── */
+.sender-input  { color: #0078d4; font-weight: 700; }
+.sender-actual { color: #d13438; font-weight: 700; }
+.sender-legit  { color: #107c10; font-weight: 700; }
+
+/* ─── GAME OVER SCREEN ───────────────────────── */
+#gameOverScreen {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.75);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 999;
+}
+#gameOverBox {
+  background: white;
+  padding: 48px;
+  border-radius: 8px;
+  text-align: center;
+  width: 380px;
+  box-shadow: 0 16px 48px rgba(0,0,0,0.3);
+  border-top: 6px solid var(--danger);
+}
+#gameOverBox h1 { font-size: 26px; margin-bottom: 12px; color: var(--danger); }
+#gameOverBox p  { color: var(--text-secondary); font-size: 14px; }
+#gameOverBtn {
+  margin-top: 24px;
+  background: var(--danger);
+  color: white;
+  border: none;
+  padding: 12px 32px;
+  border-radius: 4px;
+  font-size: 15px;
+  font-family: inherit;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+#gameOverBtn:hover { background: #a4262a; }
+
+/* ─── WIN SCREEN ─────────────────────────────── */
+#winScreen {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.6);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 999;
+}
+#winBox {
+  background: white;
+  padding: 48px;
+  border-radius: 8px;
+  text-align: center;
+  width: 380px;
+  box-shadow: 0 16px 48px rgba(0,0,0,0.3);
+}
+#winBox h1    { font-size: 26px; margin-bottom: 12px; color: var(--success); }
+#winBox p     { color: var(--text-secondary); margin-bottom: 8px; font-size: 15px; }
+#finalScore   { color: var(--accent); font-weight: 700; font-size: 24px; }
+#restartBtn {
+  margin-top: 20px;
+  background: var(--accent);
+  color: white;
+  border: none;
+  padding: 12px 32px;
+  border-radius: 4px;
+  font-size: 15px;
+  font-family: inherit;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+#restartBtn:hover { background: var(--accent-hover); }
+
+/* ─── SCROLLBAR ──────────────────────────────── */
+::-webkit-scrollbar { width: 6px; height: 6px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: #c8c6c4; border-radius: 3px; }
+::-webkit-scrollbar-thumb:hover { background: #a19f9d; }
+
+/* ─── RESPONSIVE ─────────────────────────────── */
+@media (max-width: 768px) {
+  #app { grid-template-columns: 200px 1fr; }
+  #emailBody { padding: 16px; }
+  #emailHeader { padding: 16px; }
+  #analysisPanel { padding: 8px 16px; }
+  #headersPanel { width: 260px; }
+}
+
+#urlScanModal {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.75);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 998;
+}
+
+#urlScanBox {
+  background: #1e1e1e;
+  border-radius: 6px;
+  width: 680px;
+  max-width: 90vw;
+  max-height: 80vh;
+  display: flex;
+  flex-direction: column;
+  box-shadow: 0 24px 64px rgba(0,0,0,0.5);
+  border: 1px solid #3e3e3e;
+  overflow: hidden;
+}
+
+#urlScanHeader {
+  background: #252526;
+  padding: 10px 16px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid #3e3e3e;
+  font-family: 'Courier New', monospace;
+  font-size: 12px;
+  color: #569cd6;
+  font-weight: 700;
+  flex-shrink: 0;
+}
+
+#urlScanHeader button {
+  background: #f44747;
+  color: white;
+  border: none;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  font-size: 10px;
+  font-weight: 700;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+#urlScanContent {
+  padding: 20px;
+  font-family: 'Courier New', monospace;
+  font-size: 12px;
+  color: #d4d4d4;
+  line-height: 1.9;
+  overflow-y: auto;
+  white-space: pre-wrap;
+  margin: 0;
+}
+
+#senderModal {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.75);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 998;
+}
+
+#senderModalBox {
+  background: #1e1e1e;
+  border-radius: 6px;
+  width: 680px;
+  max-width: 90vw;
+  max-height: 80vh;
+  display: flex;
+  flex-direction: column;
+  box-shadow: 0 24px 64px rgba(0,0,0,0.5);
+  border: 1px solid #3e3e3e;
+  overflow: hidden;
+}
+
+#senderModalHeader {
+  background: #252526;
+  padding: 10px 16px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid #3e3e3e;
+  font-family: 'Courier New', monospace;
+  font-size: 12px;
+  color: #569cd6;
+  font-weight: 700;
+  flex-shrink: 0;
+}
+
+#senderModalHeader button {
+  background: #f44747;
+  color: white;
+  border: none;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  font-size: 10px;
+  font-weight: 700;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+#senderModalContent {
+  padding: 20px;
+  font-family: 'Courier New', monospace;
+  font-size: 12px;
+  color: #d4d4d4;
+  line-height: 1.9;
+  overflow-y: auto;
+  white-space: pre-wrap;
+  margin: 0;
+}
+
+#pdfModal {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.75);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 998;
+}
+
+#pdfModalBox {
+  background: #1e1e1e;
+  border-radius: 6px;
+  width: 680px;
+  max-width: 90vw;
+  max-height: 80vh;
+  display: flex;
+  flex-direction: column;
+  box-shadow: 0 24px 64px rgba(0,0,0,0.5);
+  border: 1px solid #3e3e3e;
+  overflow: hidden;
+}
+
+#pdfModalHeader {
+  background: #252526;
+  padding: 10px 16px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid #3e3e3e;
+  font-family: 'Courier New', monospace;
+  font-size: 12px;
+  color: #569cd6;
+  font-weight: 700;
+  flex-shrink: 0;
+}
+
+#pdfModalHeader button {
+  background: #f44747;
+  color: white;
+  border: none;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  font-size: 10px;
+  font-weight: 700;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+#pdfModalContent {
+  padding: 20px;
+  font-family: 'Courier New', monospace;
+  font-size: 12px;
+  color: #d4d4d4;
+  line-height: 1.9;
+  overflow-y: auto;
+  white-space: pre-wrap;
+  margin: 0;
+}

@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>EATPhish - Email Analysis Training</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+
+<!-- URL SCAN MODAL -->
+<div id="urlScanModal" class="hidden">
+  <div id="urlScanBox">
+    <div id="urlScanHeader">
+      <span>URLScan.io — Simulated Report</span>
+      <button id="urlScanClose">X</button>
+    </div>
+    <pre id="urlScanContent"></pre>
+  </div>
+</div>
+
+<!-- SENDER INSPECT MODAL -->
+<div id="senderModal" class="hidden">
+  <div id="senderModalBox">
+    <div id="senderModalHeader">
+      <span>Sender Inspector — Analysis Report</span>
+      <button id="senderModalClose">X</button>
+    </div>
+    <pre id="senderModalContent"></pre>
+  </div>
+</div>
+
+<!-- PDF INSPECTOR MODAL -->
+<div id="pdfModal" class="hidden">
+  <div id="pdfModalBox">
+    <div id="pdfModalHeader">
+      <span>ExifTool — PDF Metadata Report</span>
+      <button id="pdfModalClose">X</button>
+    </div>
+    <pre id="pdfModalContent"></pre>
+  </div>
+</div>
+
+
+<body>
+
+  <!-- INTRO SCREEN -->
+  <div id="introScreen">
+    <div id="introBox">
+      <h1>EATPhish</h1>
+      <p>You are a SOC analyst.<br>Analyze suspicious emails and find the flags.</p>
+      <input id="username" type="text" placeholder="Enter your name" autocomplete="off">
+      <button id="startBtn">Start Investigation</button>
+      <p id="introDesc">5 levels · Flag in each email · No hints</p>
+    </div>
+  </div>
+
+  <!-- MAIN APP -->
+  <div id="app" class="hidden">
+
+    <!-- TOP BAR -->
+    <div id="topBar">
+      <span>EATPhish - Email Analysis Training</span>
+      <span id="topPlayer"></span>
+    </div>
+
+    <!-- SIDEBAR -->
+    <div id="sidebar">
+      <div id="sidebarHeader">
+        <span>Inbox</span>
+        <span id="playerName"></span>
+      </div>
+      <ul id="emailList"></ul>
+      <div id="sidebarStats">
+        <span>Score: <span id="score">0</span></span>
+        <span>Flags: <span id="flagCount">0</span>/5</span>
+      </div>
+    </div>
+
+    <!-- MAIN PANEL -->
+    <div id="mainPanel">
+
+      <!-- EMAIL WRAPPER: body + headers side by side -->
+      <div id="emailWrapper">
+
+        <!-- LEFT: email content -->
+        <div id="emailContent">
+          <div id="emailHeader">
+            <div id="emailSubject">Select an email to start</div>
+            <div id="emailMeta">
+              <span id="emailFrom"></span>
+              <span id="emailDate"></span>
+            </div>
+          </div>
+          <div id="emailBody">
+            <p id="emailPlaceholder">Select an email from the inbox to start.</p>
+          </div>
+        </div>
+
+        <!-- RIGHT: raw headers panel -->
+        <div id="headersPanel" class="hidden">
+          <div id="headersPanelTitle">Raw Headers</div>
+          <pre id="emailHeaderRaw"></pre>
+        </div>
+
+      </div>
+
+      <!-- ANALYSIS TOOLS -->
+      <div id="analysisPanel" class="hidden">
+        <h3>Analysis Tools</h3>
+
+        <div class="tool hidden" id="toolFlag">
+          <label>Submit Flag:</label>
+          <div class="toolInput">
+            <input id="flagInput" type="text" placeholder="FLAG{...}" autocomplete="off" spellcheck="false">
+            <button id="flagSubmit">Submit</button>
+          </div>
+          <p id="flagFeedback"></p>
+        </div>
+
+        <div class="tool hidden" id="toolSender">
+          <label>Inspect Sender:</label>
+          <div class="toolInput">
+            <input id="senderInput" type="text" placeholder="Paste sender email address..." autocomplete="off" spellcheck="false">
+            <button id="senderBtn">Analyze</button>
+          </div>
+          <p id="senderFeedback"></p>
+        </div>
+
+        <div class="tool hidden" id="toolHeaders">
+          <label>Raw Headers:</label>
+          <button id="toggleHeaders">Show Headers</button>
+        </div>
+
+        <div class="tool hidden" id="toolURL">
+          <label>Inspect URL:</label>
+          <div class="toolInput">
+            <input id="urlInput" type="text" placeholder="Paste URL to inspect..." autocomplete="off">
+            <button id="urlInspect">Analyze</button>
+          </div>
+          <p id="urlFeedback"></p>
+        </div>
+
+        <div class="tool hidden" id="toolDecode">
+          <label>Decode Base64:</label>
+          <div class="toolInput">
+            <input id="decodeInput" type="text" placeholder="Paste base64 string..." autocomplete="off">
+            <button id="decodeBtn">Decode</button>
+          </div>
+          <p id="decodeFeedback"></p>
+        </div>
+
+        <div class="tool hidden" id="toolMeta">
+          <label>Attachment:</label>
+          <button id="metaBtn">Inspect Metadata</button>
+          <p id="metaFeedback"></p>
+        </div>
+
+      </div>
+    </div>
+
+  </div>
+
+  <!-- GAME OVER SCREEN -->
+  <div id="gameOverScreen" class="hidden">
+    <div id="gameOverBox">
+      <h1>You got phished!</h1>
+      <p id="gameOverMsg">You clicked a malicious link.</p>
+      <p style="font-size:13px;margin-top:8px;">Always inspect links before clicking!</p>
+      <button id="gameOverBtn">Try Again</button>
+    </div>
+  </div>
+
+  <!-- WIN SCREEN -->
+  <div id="winScreen" class="hidden">
+    <div id="winBox">
+      <h1>Investigation Complete!</h1>
+      <p>All 5 flags found!</p>
+      <p>Final Score: <span id="finalScore"></span> pts</p>
+      <button id="restartBtn">Play Again</button>
+    </div>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
