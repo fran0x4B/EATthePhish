@@ -1,2 +1,2 @@
-# EATPhish
-EATPhish - Email Analysis Training
+# EATthePhish
+EATthePhish - Email Analysis Training
