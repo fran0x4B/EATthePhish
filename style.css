@@ -47,6 +47,7 @@ body {
 }
 
 #introBox h1 { font-size: 28px; color: var(--accent); margin-bottom: 12px; }
+#introBox h2 { font-size: 22px; color: var(--accent); margin-bottom: 12px; }
 #introBox p  { color: var(--text-secondary); margin-bottom: 24px; line-height: 1.5; }
 
 #introBox input {
