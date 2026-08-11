@@ -5,42 +5,8 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>EAT the Phish - Email Analysis Training</title>
   <link rel="stylesheet" href="style.css">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline';">
 </head>
-
-<!-- URL SCAN MODAL -->
-<div id="urlScanModal" class="hidden">
-  <div id="urlScanBox">
-    <div id="urlScanHeader">
-      <span>URLScan.io — Simulated Report</span>
-      <button id="urlScanClose">X</button>
-    </div>
-    <pre id="urlScanContent"></pre>
-  </div>
-</div>
-
-<!-- SENDER INSPECT MODAL -->
-<div id="senderModal" class="hidden">
-  <div id="senderModalBox">
-    <div id="senderModalHeader">
-      <span>Sender Inspector — Analysis Report</span>
-      <button id="senderModalClose">X</button>
-    </div>
-    <pre id="senderModalContent"></pre>
-  </div>
-</div>
-
-<!-- PDF INSPECTOR MODAL -->
-<div id="pdfModal" class="hidden">
-  <div id="pdfModalBox">
-    <div id="pdfModalHeader">
-      <span>ExifTool — PDF Metadata Report</span>
-      <button id="pdfModalClose">X</button>
-    </div>
-    <pre id="pdfModalContent"></pre>
-  </div>
-</div>
-
-
 <body>
 
   <!-- INTRO SCREEN -->
@@ -48,10 +14,10 @@
     <div id="introBox">
       <h1>EAT the Phish</h1>
       <h2>Email Analysis Training</h2>
-      <p>You are a SOC analyst.<br>Analyze suspicious emails and find the flags.</p>
-      <input id="username" type="text" placeholder="Enter your name" autocomplete="off">
-      <button id="startBtn">Start Investigation</button>
-      <p id="introDesc">5 levels · Flag in each email · No hints</p>
+      <p>You are a SOC analyst.<br>Analyze suspicious emails and decide: phishing or legitimate?</p>
+      <input id="username" type="text" placeholder="Enter your name" autocomplete="off" required minlength="2" maxlength="50">
+      <button id="startBtn" type="button">Start Investigation</button>
+      <p id="introDesc">6 levels · Real-world scenarios · No hints</p>
     </div>
   </div>
 
@@ -73,7 +39,7 @@
       <ul id="emailList"></ul>
       <div id="sidebarStats">
         <span>Score: <span id="score">0</span></span>
-        <span>Flags: <span id="flagCount">0</span>/5</span>
+        <span>Completed: <span id="flagCount">0</span>/6</span>
       </div>
     </div>
 
@@ -109,34 +75,34 @@
       <div id="analysisPanel" class="hidden">
         <h3>Analysis Tools</h3>
 
-        <div class="tool hidden" id="toolFlag">
-          <label>Submit Flag:</label>
-          <div class="toolInput">
-            <input id="flagInput" type="text" placeholder="FLAG{...}" autocomplete="off" spellcheck="false">
-            <button id="flagSubmit">Submit</button>
+        <div class="tool hidden" id="toolDecision">
+          <label>Verdict:</label>
+          <div class="toolInput" style="gap:12px;">
+            <button id="btnPhishing" type="button" style="flex:1;background:#d13438;">Report Phishing</button>
+            <button id="btnLegit" type="button" style="flex:1;background:#107c10;">✓ Mark Legitimate</button>
           </div>
-          <p id="flagFeedback"></p>
+          <p id="decisionFeedback"></p>
         </div>
 
         <div class="tool hidden" id="toolSender">
           <label>Inspect Sender:</label>
           <div class="toolInput">
-            <input id="senderInput" type="text" placeholder="Paste sender email address..." autocomplete="off" spellcheck="false">
-            <button id="senderBtn">Analyze</button>
+            <input id="senderInput" type="email" placeholder="Paste sender email address..." autocomplete="off" spellcheck="false">
+            <button id="senderBtn" type="button">Analyze</button>
           </div>
           <p id="senderFeedback"></p>
         </div>
 
         <div class="tool hidden" id="toolHeaders">
           <label>Raw Headers:</label>
-          <button id="toggleHeaders">Show Headers</button>
+          <button id="toggleHeaders" type="button">Show Headers</button>
         </div>
 
         <div class="tool hidden" id="toolURL">
           <label>Inspect URL:</label>
           <div class="toolInput">
-            <input id="urlInput" type="text" placeholder="Paste URL to inspect..." autocomplete="off">
-            <button id="urlInspect">Analyze</button>
+            <input id="urlInput" type="url" placeholder="Paste URL to inspect..." autocomplete="off">
+            <button id="urlInspect" type="button">Analyze</button>
           </div>
           <p id="urlFeedback"></p>
         </div>
@@ -145,14 +111,14 @@
           <label>Decode Base64:</label>
           <div class="toolInput">
             <input id="decodeInput" type="text" placeholder="Paste base64 string..." autocomplete="off">
-            <button id="decodeBtn">Decode</button>
+            <button id="decodeBtn" type="button">Decode</button>
           </div>
           <p id="decodeFeedback"></p>
         </div>
 
         <div class="tool hidden" id="toolMeta">
           <label>Attachment:</label>
-          <button id="metaBtn">Inspect Metadata</button>
+          <button id="metaBtn" type="button">Inspect Metadata</button>
           <p id="metaFeedback"></p>
         </div>
 
@@ -162,25 +128,70 @@
   </div>
 
   <!-- GAME OVER SCREEN -->
-  <div id="gameOverScreen" class="hidden">
+  <div id="gameOverScreen" class="hidden" role="dialog" aria-modal="true" aria-labelledby="gameOverBox">
     <div id="gameOverBox">
       <h1>You got phished!</h1>
       <p id="gameOverMsg">You clicked a malicious link.</p>
       <p style="font-size:13px;margin-top:8px;">Always inspect links before clicking!</p>
-      <button id="gameOverBtn">Try Again</button>
+      <button id="gameOverBtn" type="button">Try Again</button>
     </div>
   </div>
 
   <!-- WIN SCREEN -->
-  <div id="winScreen" class="hidden">
+  <div id="winScreen" class="hidden" role="dialog" aria-modal="true" aria-labelledby="winBox">
     <div id="winBox">
       <h1>Investigation Complete!</h1>
-      <p>All 5 flags found!</p>
+      <p>All 6 emails analyzed!</p>
       <p>Final Score: <span id="finalScore"></span> pts</p>
-      <button id="restartBtn">Play Again</button>
+      <button id="restartBtn" type="button">Play Again</button>
     </div>
   </div>
 
+  <!-- URL SCAN MODAL -->
+  <div id="urlScanModal" class="hidden" role="dialog" aria-modal="true" aria-labelledby="urlScanHeader">
+    <div id="urlScanBox">
+      <div id="urlScanHeader">
+        <span>URLScan.io — Simulated Report</span>
+        <button id="urlScanClose" type="button">X</button>
+      </div>
+      <pre id="urlScanContent"></pre>
+    </div>
+  </div>
+
+  <!-- SENDER INSPECT MODAL -->
+  <div id="senderModal" class="hidden" role="dialog" aria-modal="true" aria-labelledby="senderModalHeader">
+    <div id="senderModalBox">
+      <div id="senderModalHeader">
+        <span>Sender Inspector — Analysis Report</span>
+        <button id="senderModalClose" type="button">X</button>
+      </div>
+      <pre id="senderModalContent"></pre>
+    </div>
+  </div>
+
+  <!-- PDF INSPECTOR MODAL -->
+  <div id="pdfModal" class="hidden" role="dialog" aria-modal="true" aria-labelledby="pdfModalHeader">
+    <div id="pdfModalBox">
+      <div id="pdfModalHeader">
+        <span>ExifTool — PDF Metadata Report</span>
+        <button id="pdfModalClose" type="button">X</button>
+      </div>
+      <pre id="pdfModalContent"></pre>
+    </div>
+  </div>
+
+  <!-- VERDICT MODAL -->
+<div id="verdictModal" class="hidden" role="dialog" aria-modal="true" aria-labelledby="verdictContent">
+  <div id="verdictBox">
+    <div id="verdictHeader">
+      <span>Analysis Report</span>
+      <button id="verdictClose" type="button">X</button>
+    </div>
+    <div id="verdictContent"></div>
+  </div>
+</div>
+
   <script src="script.js"></script>
+
 </body>
 </html>
