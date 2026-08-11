@@ -727,7 +727,7 @@ X-Priority: 3 (Normal)`,
       <li><strong>DKIM Signature Date:</strong> <span style="color:#d13438;font-weight:700;">2024-01-15</span> (2 years old!)</li>
       <li><strong>Email Date:</strong> <span style="color:#d13438;font-weight:700;">2026-03-23</span> (mismatch!)</li>
       <li><strong>Attachment:</strong> <span style="color:#d13438;font-weight:700;">prime_receipt_2026.pdf</span> (unexpected!)</li>
-      <li><strong>Link domain:</strong> <span style="color:#d13438;font-weight:700;">amazon-renewals.com</span> (EXPIRED & re-registered!)</li>
+      <li><strong>Link domain:</strong> <span style="color:#d13438;font-weight:700;">amazonrenewals.com</span> (EXPIRED & re-registered!)</li>
       <li><strong>Domain age:</strong> <span style="color:#d13438;font-weight:700;">Re-registered 3 days ago</span> (suspicious!)</li>
     </ul>
   </div>
@@ -740,7 +740,7 @@ X-Priority: 3 (Normal)`,
       <li>The attacker captured a legitimate Amazon email from 2024</li>
       <li>Kept the valid DKIM signature (still cryptographically valid!)</li>
       <li>Modified the body to add a malicious link</li>
-      <li>Re-registered an expired Amazon subdomain (amazon-renewals.com)</li>
+      <li>Re-registered an expired Amazon subdomain (amazonrenewals.com)</li>
     </ul>
   </div>
   
@@ -772,7 +772,7 @@ X-Priority: 3 (Normal)`,
 `,
   scoreIfCorrect: 150,
   scoreIfWrong: -75,
-  urlTrigger: "amazon-renewals.com",
+  urlTrigger: "amazonrenewals.com",
   senderInfo: { 
     display: "Amazon Prime <prime-membership@amazon.com>", 
     legitimate: "amazon.com",
@@ -890,7 +890,7 @@ Encryption: None`,
             <p style="color:#333;font-size:14px;margin-bottom:12px;">
               Want to manage your subscription or update payment method?
             </p>
-            <a class="email-cta" href="#" title="https://amazon-renewals.com/manage-prime?ref=IT40268831&session=a1b2c3d4" style="background:#0070ba;color:white;padding:14px 48px;border-radius:8px;font-size:15px;font-weight:600;text-decoration:none;display:inline-block;box-shadow:0 2px 4px rgba(0,0,0,0.2);">
+            <a class="email-cta" href="#" title="https://amazonrenewals.com/manage-prime?ref=IT40268831&session=a1b2c3d4" style="background:#0070ba;color:white;padding:14px 48px;border-radius:8px;font-size:15px;font-weight:600;text-decoration:none;display:inline-block;box-shadow:0 2px 4px rgba(0,0,0,0.2);">
               Manage Your Prime Membership
             </a>
           </div>
@@ -899,7 +899,7 @@ Encryption: None`,
           <div style="background:#f0f0f0;border:1px solid #ccc;border-radius:4px;padding:12px;margin:20px 0;">
             <p style="color:#555;font-size:12px;margin:0 0 6px 0;font-weight:600;">Secure Amazon URL:</p>
             <p style="color:#0070ba;font-size:12px;margin:0;font-family:monospace;word-break:break-all;">
-              https://amazon-renewals.com/manage-prime?ref=IT40268831
+              https://amazonrenewals.com/manage-prime?ref=IT40268831
             </p>
           </div>
           
@@ -918,19 +918,13 @@ Encryption: None`,
         <!-- Footer -->
         <div style="background:#232f3e;padding:24px 32px;border-top:1px solid #e5e5e5;">
           <p style="color:#ccc;font-size:11px;text-align:center;margin:0 0 12px 0;">
-            Amazon EU S.à r.l., 38 avenue John F. Kennedy, L-1855 Luxembourg
+            Amazon EU S.r.l., 38 avenue John F. Kennedy, L-1855 Luxembourg
           </p>
           <p style="color:#999;font-size:11px;text-align:center;margin:0;">
             © 2026 Amazon Prime. All rights reserved.
           </p>
         </div>
         
-      </div>
-      
-      <!-- Security Tip -->
-      <div class="email-warning" style="max-width:600px;margin:12px auto 0;background:#fff4ce;border-left:4px solid #f7ca00;padding:12px 16px;font-size:12px;color:#7a5e00;">
-        <strong>Security Tip:</strong> Check DKIM timestamps AND inspect URLs for 
-        domain registration date. Recently re-registered domains are suspicious!
       </div>
     </div>
   `
@@ -1278,19 +1272,19 @@ inspectSender() {
   }
 
   // Livello 6 — DKIM Replay + Expired Domain (amazon-renewals.com)
-  if (this.currentEmail?.urlTrigger === 'amazon-renewals.com' && domain.includes(this.currentEmail.urlTrigger)) {
+  if (this.currentEmail?.urlTrigger === 'amazonrenewals.com' && domain.includes(this.currentEmail.urlTrigger)) {
     document.getElementById('urlScanContent').innerHTML = `
 <span style="color:#569cd6;">URL submitted   :</span> <span style="color:#ce9178;">${this.escapeHtml(input.substring(0, 65))}...</span>
 <span style="color:#569cd6;">Scan time       :</span> Mon, 23 Mar 2026 11:04:12 UTC
 
 <span style="color:#888;">── Domain Analysis ─────────────────────────────────</span>
-<span style="color:#569cd6;">Effective TLD+1 :</span> <span style="color:#f44747;font-weight:700;">amazon-renewals.com</span>
+<span style="color:#569cd6;">Effective TLD+1 :</span> <span style="color:#f44747;font-weight:700;">amazonrenewals.com</span>
 <span style="color:#569cd6;">Subdomain       :</span> <span style="color:#dcdcaa;">manage-prime</span>
 <span style="color:#569cd6;">Registrar       :</span> GoDaddy LLC
 <span style="color:#569cd6;">Registered      :</span> <span style="color:#f44747;">2026-03-20</span> (3 days ago)
-<span style="color:#569cd6;">EXPIRED         :</span> <span style="color:#f44747;">YES — 2024-12-15</span> (re-registered!)
+<span style="color:#569cd6;">EXPIRED         :</span> <span style="color:#f44747;">YES — 2024-12-15</span>
 <span style="color:#569cd6;">Previous owner  :</span> <span style="color:#f44747;">Amazon.com, Inc.</span>
-<span style="color:#569cd6;">ASN             :</span> AS14618 — Amazon.com, Inc. (spoofed!)
+<span style="color:#569cd6;">ASN             :</span> AS14618 — Amazon.com, Inc.
 <span style="color:#569cd6;">IP              :</span> 54.239.28.85
 
 <span style="color:#888;">── Threat Intelligence ─────────────────────────────</span>
