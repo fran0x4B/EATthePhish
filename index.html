@@ -127,7 +127,7 @@
 
   </div>
 
-  <!-- GAME OVER SCREEN -->
+  <!-- GAME OVER SCREEN (click su link malevolo) -->
   <div id="gameOverScreen" class="hidden" role="dialog" aria-modal="true" aria-labelledby="gameOverBox">
     <div id="gameOverBox">
       <h1>You got phished!</h1>
@@ -188,6 +188,17 @@
       <button id="verdictClose" type="button">X</button>
     </div>
     <div id="verdictContent"></div>
+  </div>
+</div>
+
+<!-- GAME OVER (END GAME) MODAL -->
+<div id="gameOverModal" class="hidden" role="dialog" aria-modal="true" aria-labelledby="gameOverModalTitle">
+  <div id="gameOverModalBox">
+    <div id="gameOverModalTitle" style="font-size:20px;font-weight:700;margin-bottom:12px;">Investigation Complete</div>
+    <p id="gameOverMessage" style="margin-bottom:16px;"></p>
+    <button id="playAgainBtn" type="button" style="background:#107c10;color:white;border:none;padding:10px 20px;border-radius:4px;cursor:pointer;font-weight:600;font-size:14px;width:100%;">
+      Play Again
+    </button>
   </div>
 </div>
 

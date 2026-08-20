@@ -5,7 +5,7 @@ const emails = [
   subject: "PayPal: We've limited your account access",
   from: "service@paypa1.com",
   displayName: "PayPal",
-  date: "Mon, 23 Mar 2026 08:14",
+  date: formatDateEmail(-1),
   preview: "We noticed unusual activity. Please verify your account...",
   solved: false,
   isPhishing: true,
@@ -45,7 +45,7 @@ explanation: `
     dkim: "fail", 
     dmarc: "fail"
   },
-  headers: `Delivered-To: analyst@company.com
+  headers: `Delivered-To: [analyst@company.com](mailto:analyst@company.com)
 Received: by mail.company.com with SMTP id x7csp291034qtc;
         Mon, 23 Mar 2026 08:14:32 +0000 (UTC)
 Received: from mail-relay-eu.paypa1.com (mail-relay-eu.paypa1.com [185.220.101.12])
@@ -61,8 +61,8 @@ Received: from localhost (localhost [127.0.0.1])
 X-Spam-Status: No, score=-1.2
 X-Spam-Checker-Version: SpamAssassin 4.0.0
 Authentication-Results: mx.company.com;
-        dkim=fail (signature verification failed) header.i=@paypa1.com;
-        spf=softfail smtp.mailfrom=service@paypa1.com;
+        dkim=fail (signature verification failed) [header.i=@paypa1.com](mailto:header.i=@paypa1.com);
+        spf=softfail [smtp.mailfrom=service@paypa1.com](mailto:smtp.mailfrom=service@paypa1.com);
         dmarc=fail (p=REJECT) header.from=paypa1.com
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=paypa1.com;
         s=default; t=1742720069;
@@ -76,8 +76,8 @@ X-PHP-Originating-Script: 1000:mailer_v2.php
 Message-ID: <20260323081428.A3F2B1C04D2@smtp-out1.paypa1.com>
 Date: Mon, 23 Mar 2026 08:14:28 +0000 (UTC)
 From: "PayPal" <service@paypa1.com>
-Reply-To: no-reply@paypa1.com
-To: analyst@company.com
+Reply-To: [no-reply@paypa1.com](mailto:no-reply@paypa1.com)
+To: [analyst@company.com](mailto:analyst@company.com)
 Subject: PayPal: We've limited your account access
 MIME-Version: 1.0
 Content-Type: multipart/alternative; boundary="----=_Part_8821_1234567890"
@@ -160,7 +160,7 @@ X-Priority: 1`,
     subject: "Microsoft 365: Unusual sign-in detected",
     from: "security@microsoft.com",
     displayName: "Microsoft Security",
-    date: "Mon, 23 Mar 2026 09:45",
+    date: formatDateEmail(-2),
     preview: "A sign-in from an unknown location was detected...",
     solved: false,
     isPhishing: true,
@@ -201,7 +201,7 @@ X-Priority: 1`,
       envelopeLegit: false,
       spf: "fail", dkim: "none", dmarc: "fail"
     },
-    headers: `Delivered-To: analyst@company.com
+    headers: `Delivered-To: [analyst@company.com](mailto:analyst@company.com)
 Received: by mail.company.com with SMTP id m12csp109234qtw;
         Mon, 23 Mar 2026 09:45:18 +0000 (UTC)
 Received: from mail-ww2-f42.micros0ft-alert.com (mail-ww2-f42.micros0ft-alert.com [185.220.101.47])
@@ -224,8 +224,8 @@ X-Mailer: PhishKit v3.1
 Message-ID: <ph1sh1ng@micros0ft-alert.com>
 Date: Mon, 23 Mar 2026 09:45:00 +0000
 From: "Microsoft Security" <security@microsoft.com>
-Reply-To: no-reply@micros0ft-alert.com
-To: analyst@company.com
+Reply-To: [no-reply@micros0ft-alert.com](mailto:no-reply@micros0ft-alert.com)
+To: [analyst@company.com](mailto:analyst@company.com)
 Subject: Microsoft 365: Unusual sign-in detected
 MIME-Version: 1.0
 Content-Type: text/html; charset=UTF-8
@@ -276,7 +276,7 @@ X-Priority: 2`,
             <hr style="border:none;border-top:1px solid #e5e5e5;margin:24px 0;">
             <p style="color:#888;font-size:12px;line-height:1.6;">
               You're receiving this because security alerts are enabled for your account.<br>
-              From: security@microsoft.com
+              From: [security@microsoft.com](mailto:security@microsoft.com)
             </p>
           </div>
           <div style="background:#f3f2f1;padding:16px 32px;border-top:1px solid #e5e5e5;">
@@ -294,7 +294,7 @@ X-Priority: 2`,
   subject: "URGENT: Wire transfer needed for acquisition deal",
   from: "cfo@company.com",
   displayName: "Sarah Chen - CFO",
-  date: "Sun, 22 Mar 2026 03:17",
+  date: lastSundayAt0317(),
   preview: "Need immediate wire transfer for time-sensitive acquisition...",
   solved: false,
   isPhishing: true,
@@ -346,7 +346,7 @@ X-Priority: 2`,
     dkim: "pass", 
     dmarc: "pass"
   },
-  headers: `Delivered-To: analyst@company.com
+  headers: `Delivered-To: [analyst@company.com](mailto:analyst@company.com)
 Received: by mail.company.com with SMTP id x9csp882145qtw;
         Sun, 22 Mar 2026 03:17:42 +0000 (UTC)
 Received: from mail.company.com (mail.company.com [185.220.101.99])
@@ -370,8 +370,8 @@ X-Sender-Location: Moscow, Russia
 Message-ID: <20260322031741.A1B2C3D4E5F6@mail.company.com>
 Date: Sun, 22 Mar 2026 03:17:41 +0000 (UTC)
 From: "Sarah Chen - CFO" <cfo@company.com>
-Reply-To: cfo@company.com
-To: analyst@company.com
+Reply-To: [cfo@company.com](mailto:cfo@company.com)
+To: [analyst@company.com](mailto:analyst@company.com)
 Subject: URGENT: Wire transfer needed for acquisition deal
 MIME-Version: 1.0
 Content-Type: text/html; charset=UTF-8
@@ -464,7 +464,7 @@ Importance: High`,
     subject: "IT Dept: Password expiry notice",
     from: "it-helpdesk@company.com",
     displayName: "IT Helpdesk",
-    date: "Mon, 23 Mar 2026 13:30",
+    date: formatDateEmail(-1),
     preview: "Your password will expire in 24 hours...",
     solved: false,
     isPhishing: false,
@@ -505,7 +505,7 @@ Importance: High`,
       dkim: "pass", 
       dmarc: "pass"
     },
-    headers: `Delivered-To: analyst@company.com
+    headers: `Delivered-To: [analyst@company.com](mailto:analyst@company.com)
 Received: by mail.company.com with SMTP id p9csp441829qtv;
         Mon, 23 Mar 2026 13:30:55 +0000 (UTC)
 Received: from mail.company.com (mail.company.com [10.0.1.50])
@@ -527,8 +527,8 @@ X-Mailer: Microsoft Exchange Server
 Message-ID: <20260323133051.D2F5C4G22B3@mail.company.com>
 Date: Mon, 23 Mar 2026 13:30:51 +0000 (UTC)
 From: "IT Helpdesk" <it-helpdesk@company.com>
-Reply-To: it-helpdesk@company.com
-To: analyst@company.com
+Reply-To: [it-helpdesk@company.com](mailto:it-helpdesk@company.com)
+To: [analyst@company.com](mailto:analyst@company.com)
 Subject: IT Dept: Password expiry notice
 MIME-Version: 1.0
 Content-Type: text/html; charset=UTF-8
@@ -575,16 +575,16 @@ X-Priority: 3 (Normal)`,
       </div>
     `
   },
-  {
-    id: 5,
-    subject: "HR: Updated employment contract Q1 2026",
-    from: "hr@company.com",
-    displayName: "HR Department",
-    date: "Mon, 23 Mar 2026 15:55",
-    preview: "Please review and sign your updated contract...",
-    solved: false,
-    isPhishing: false,
-    explanation: `
+{
+  id: 5,
+  subject: "HR: Updated employment contract Q1 2026",
+  from: "hr@company.com",
+  displayName: "HR Department",
+  date: formatDateEmail(-2),
+  preview: "Please review and sign your updated contract...",
+  solved: false,
+  isPhishing: false,
+  explanation: `
   <strong>LEGITIMATE EMAIL</strong>
   
   <div style="margin-top:12px;">
@@ -612,16 +612,16 @@ X-Priority: 3 (Normal)`,
     Always analyze the complete context before deciding.
   </div>
 `,
-    scoreIfCorrect: 100,
-    scoreIfWrong: -50,
-    senderInfo: { 
-      display: "HR Department <hr@company.com>", 
-      legitimate: "company.com",
-      spf: "pass", 
-      dkim: "pass", 
-      dmarc: "pass"
-    },
-    meta: `File: contract_Q1_2026.pdf
+  scoreIfCorrect: 100,
+  scoreIfWrong: -50,
+  senderInfo: { 
+    display: "HR Department <hr@company.com>", 
+    legitimate: "company.com",
+    spf: "pass", 
+    dkim: "pass", 
+    dmarc: "pass"
+  },
+  meta: `File: contract_Q1_2026.pdf
 Author: HR Department
 Creator: Adobe Acrobat Pro DC
 Created: 2026-03-22 10:30:00 UTC
@@ -629,7 +629,7 @@ Modified: 2026-03-22 10:30:00 UTC
 Producer: Adobe PDF Library 15.0
 File size: 248 KB
 Encryption: None`,
-    headers: `Delivered-To: analyst@company.com
+  headers: `Delivered-To: [analyst@company.com](mailto:analyst@company.com)
 Received: by mail.company.com with SMTP id w2csp773012qtx;
         Mon, 23 Mar 2026 15:55:30 +0000 (UTC)
 Received: from mail.company.com (mail.company.com [10.0.1.51])
@@ -654,63 +654,70 @@ X-Attachment-Size: 253952
 Message-ID: <20260323155529.E3G6D5H33C4@mail.company.com>
 Date: Mon, 23 Mar 2026 15:55:29 +0000 (UTC)
 From: "HR Department" <hr@company.com>
-Reply-To: hr@company.com
-To: analyst@company.com
+Reply-To: [hr@company.com](mailto:hr@company.com)
+To: [analyst@company.com](mailto:analyst@company.com)
 Subject: HR: Updated employment contract Q1 2026
 MIME-Version: 1.0
 Content-Type: multipart/mixed; boundary="----=_Part_3342_9876543210"
 X-Priority: 3 (Normal)`,
-    body: `
-      <div style="background:#f5f5f5;padding:20px;">
-        <div style="max-width:600px;margin:0 auto;background:white;border-radius:4px;overflow:hidden;box-shadow:0 1px 3px rgba(0,0,0,0.1);">
-          <div style="background:#d83b01;padding:18px 32px;display:flex;align-items:center;gap:12px;">
-            <div style="background:white;border-radius:50%;width:36px;height:36px;display:flex;align-items:center;justify-content:center;font-weight:700;color:#d83b01;font-size:14px;">HR</div>
-            <div>
-              <div style="color:white;font-size:16px;font-weight:700;">Human Resources</div>
-              <div style="color:#f9b8a0;font-size:11px;">Company HR Department</div>
-            </div>
+      body: `
+    <div style="background:#f5f5f5;padding:20px;">
+      <div style="max-width:600px;margin:0 auto;background:white;border-radius:4px;overflow:hidden;box-shadow:0 1px 3px rgba(0,0,0,0.1);">
+        <div style="background:#d83b01;padding:18px 32px;display:flex;align-items:center;gap:12px;">
+          <div style="background:white;border-radius:50%;width:36px;height:36px;display:flex;align-items:center;justify-content:center;font-weight:700;color:#d83b01;font-size:14px;">HR</div>
+          <div>
+            <div style="color:white;font-size:16px;font-weight:700;">Human Resources</div>
+            <div style="color:#f9b8a0;font-size:11px;">Company HR Department</div>
           </div>
-          <div style="padding:32px;">
-            <p style="font-size:18px;font-weight:600;color:#323130;margin-bottom:20px;">Updated Employment Contract — Q1 2026</p>
-            <p style="color:#323130;font-size:14px;margin-bottom:16px;">Dear Employee,</p>
-            <p style="color:#323130;font-size:14px;line-height:1.6;margin-bottom:20px;">
-              Please find attached your <strong>updated employment contract for Q1 2026</strong>, 
-              reflecting the latest changes to our compensation structure and remote work policy.
-            </p>
-            <p style="color:#323130;font-size:14px;line-height:1.6;margin-bottom:24px;">
-              Kindly review the document carefully and return the <strong>signed copy by Friday, March 27th</strong>.
-            </p>
-            <div style="border:1px solid #e1dfdd;border-radius:4px;padding:16px;display:flex;align-items:center;gap:16px;margin-bottom:24px;background:#faf9f8;">
-              <div style="background:#d83b01;border-radius:4px;width:44px;height:52px;display:flex;align-items:center;justify-content:center;flex-shrink:0;">
-                <span style="color:white;font-size:11px;font-weight:700;">PDF</span>
+        </div>
+        <div style="padding:32px;">
+          <p style="font-size:18px;font-weight:600;color:#323130;margin-bottom:20px;">Updated Employment Contract — Q1 2026</p>
+          <p style="color:#323130;font-size:14px;margin-bottom:16px;">Dear Employee,</p>
+          <p style="color:#323130;font-size:14px;line-height:1.6;margin-bottom:20px;">
+            Please find attached your <strong>updated employment contract for Q1 2026</strong>, 
+            reflecting the latest changes to our compensation structure and remote work policy.
+          </p>
+          <p style="color:#323130;font-size:14px;line-height:1.6;margin-bottom:24px;">
+            Kindly review the document carefully and return the <strong>signed copy by Friday, March 27th</strong>.
+          </p>
+          
+          <!-- Attachment Section (stile Outlook) -->
+          <div style="border:2px solid #e1dfdd;border-radius:6px;padding:16px;margin:24px 0;background:#faf9f8;box-shadow:0 2px 4px rgba(0,0,0,0.05);">
+            <div style="display:flex;align-items:center;gap:16px;">
+              <div style="background:#d83b01;border-radius:6px;width:56px;height:72px;display:flex;align-items:center;justify-content:center;flex-shrink:0;box-shadow:0 2px 4px rgba(0,0,0,0.1);">
+                <span style="color:white;font-size:12px;font-weight:700;">PDF</span>
               </div>
-              <div style="flex:1;">
-                <div style="font-weight:600;font-size:13px;color:#323130;">contract_Q1_2026.pdf</div>
-                <div style="font-size:11px;color:#605e5c;margin-top:2px;">248 KB · PDF Document · Requires signature</div>
+              <div style="flex:1;min-width:0;">
+                <div style="font-weight:600;font-size:14px;color:#323130;word-break:break-all;">contract_Q1_2026.pdf</div>
+                <div style="font-size:12px;color:#605e5c;margin-top:4px;">248 KB · PDF Document</div>
               </div>
-              <a href="#" style="background:#d83b01;color:white;padding:8px 16px;font-size:12px;font-weight:600;text-decoration:none;border-radius:3px;white-space:nowrap;">
+              <a class="email-cta" href="#" style="background:#0078d4;color:white;padding:10px 20px;font-size:13px;font-weight:600;text-decoration:none;border-radius:4px;white-space:nowrap;transition:background 0.2s;">
                 Open
               </a>
             </div>
-            <hr style="border:none;border-top:1px solid #e5e5e5;margin:24px 0;">
-            <p style="color:#888;font-size:12px;line-height:1.6;">
-              Confidential — intended only for the named recipient.<br>
-              <span style="font-size:11px;">hr@company.com</span>
-            </p>
           </div>
-          <div style="background:#f3f2f1;padding:16px 32px;border-top:1px solid #e5e5e5;">
-            <p style="color:#888;font-size:11px;text-align:center;">Company HR Department · Confidential · 2026</p>
-          </div>
+          
+          <hr style="border:none;border-top:1px solid #e5e5e5;margin:24px 0;">
+          <p style="color:#888;font-size:12px;line-height:1.6;">
+            Confidential — intended only for the named recipient.<br>
+            <span style="font-size:11px;">hr@company.com</span>
+          </p>
+
+
+        </div>
+        <div style="background:#f3f2f1;padding:16px 32px;border-top:1px solid #e5e5e5;">
+          <p style="color:#888;font-size:11px;text-align:center;">Company HR Department · Confidential · 2026</p>
         </div>
       </div>
-    `
-  },
- {
+    </div>
+  `
+},
+{
   id: 6,
   subject: "Amazon Prime: Your membership renewal confirmation",
   from: "prime-membership@amazon.com",
   displayName: "Amazon Prime",
-  date: "Mon, 23 Mar 2026 11:02",
+  date: formatDateEmail(0),
   preview: "Your Amazon Prime membership has been renewed. Receipt attached...",
   solved: false,
   isPhishing: true,
@@ -724,8 +731,8 @@ X-Priority: 3 (Normal)`,
       <li><strong>SPF:</strong> <span style="color:#107c10;font-weight:700;">pass</span> (amazon.com authorizes this IP)</li>
       <li><strong>DKIM:</strong> <span style="color:#107c10;font-weight:700;">pass</span> (signature is valid!)</li>
       <li><strong>DMARC:</strong> <span style="color:#107c10;font-weight:700;">pass</span> (alignment correct)</li>
-      <li><strong>DKIM Signature Date:</strong> <span style="color:#d13438;font-weight:700;">2024-01-15</span> (2 years old!)</li>
-      <li><strong>Email Date:</strong> <span style="color:#d13438;font-weight:700;">2026-03-23</span> (mismatch!)</li>
+      <li><strong>DKIM Signature Date:</strong> <span style="color:#d13438;font-weight:700;">2 years old</span> (check t= field!)</li>
+      <li><strong>Email Date:</strong> <span style="color:#d13438;font-weight:700;">${formatDateEmail(0)}</span> (today!)</li>
       <li><strong>Attachment:</strong> <span style="color:#d13438;font-weight:700;">prime_receipt_2026.pdf</span> (unexpected!)</li>
       <li><strong>Link domain:</strong> <span style="color:#d13438;font-weight:700;">amazonrenewals.com</span> (EXPIRED & re-registered!)</li>
       <li><strong>Domain age:</strong> <span style="color:#d13438;font-weight:700;">Re-registered 3 days ago</span> (suspicious!)</li>
@@ -737,7 +744,7 @@ X-Priority: 3 (Normal)`,
     This is a sophisticated <strong>DKIM Replay Attack</strong> combined with 
     <strong>Expired Domain Hijacking</strong>:
     <ul style="margin:8px 0 8px 20px;">
-      <li>The attacker captured a legitimate Amazon email from 2024</li>
+      <li>The attacker captured a legitimate Amazon email from 2 years ago</li>
       <li>Kept the valid DKIM signature (still cryptographically valid!)</li>
       <li>Modified the body to add a malicious link</li>
       <li>Re-registered an expired Amazon subdomain (amazonrenewals.com)</li>
@@ -777,22 +784,22 @@ X-Priority: 3 (Normal)`,
     display: "Amazon Prime <prime-membership@amazon.com>", 
     legitimate: "amazon.com",
     spf: "pass", 
-    dkim: "pass (but signature is from 2024!)", 
+    dkim: "pass (but signature is from 2 years ago!)", 
     dmarc: "pass" 
   },
-  headers: `Delivered-To: analyst@company.com
+  headers: `Delivered-To: [analyst@company.com](mailto:analyst@company.com)
 Received: by mail.company.com with SMTP id b4csp882011qvn;
-        Mon, 23 Mar 2026 11:02:44 +0000 (UTC)
+        ${formatDateEmailShort(0)} +0000 (UTC)
 Received: from mail.amazon.com (mail.amazon.com [54.239.28.85])
-        by mx.company.com with ESMTPS id r2si4401928pli.12.2026.03.23.11.02.43
+        by mx.company.com with ESMTPS id r2si4401928pli.12.${new Date().getFullYear()}.08.20.11.02.43
         (version=TLS1_2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256/256);
-        Mon, 23 Mar 2026 11:02:43 +0000 (UTC)
+        ${formatDateEmailShort(0)} +0000 (UTC)
 Authentication-Results: mx.company.com;
-        dkim=pass (signature valid) header.i=@amazon.com;
+        dkim=pass (signature valid) [header.i=@amazon.com](mailto:header.i=@amazon.com);
         spf=pass (amazon.com authorizes 54.239.28.85);
         dmarc=pass (p=REJECT; alignment=strict) header.from=amazon.com
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=amazon.com; s=amazon2024; t=1705312800;
+        d=amazon.com; s=amazon2024; t=${formatTimestampUnix(-730)};
         h=From:To:Subject:Date:Message-ID:MIME-Version;
         bh=xYz9AbCdEfGhIjKlMnOpQrStUvWxYz=;
         b=ValidValidValidValidValidValid==
@@ -802,11 +809,11 @@ X-Mailer: Amazon SES
 X-Attachment: prime_receipt_2026.pdf
 X-Attachment-Hash: 7f8a9b0c1d2e3f4a5b6c7d8e9f0a1b2c
 X-Attachment-Size: 159744
-Message-ID: <20240115103000.A1B2C3D4E5F6@mail.amazon.com>
-Date: Mon, 23 Mar 2026 11:02:43 +0000
+Message-ID: <${new Date().getFullYear()}0115103000.A1B2C3D4E5F6@mail.amazon.com>
+Date: ${formatDateEmail(0)}
 From: "Amazon Prime" <prime-membership@amazon.com>
-Reply-To: prime-membership@amazon.com
-To: analyst@company.com
+Reply-To: [prime-membership@amazon.com](mailto:prime-membership@amazon.com)
+To: [analyst@company.com](mailto:analyst@company.com)
 Subject: Amazon Prime: Your membership renewal confirmation
 MIME-Version: 1.0
 Content-Type: multipart/mixed; boundary="----=_Part_3342_9876543210"
@@ -814,8 +821,8 @@ X-Priority: 3 (Normal)`,
   meta: `File: prime_receipt_2026.pdf
 Author: Amazon.com
 Creator: Amazon SES PDF Generator
-Created: 2026-03-20 10:30:00 UTC
-Modified: 2026-03-20 10:30:00 UTC
+Created: ${formatISODate(-3)}
+Modified: ${formatISODate(-3)}
 Producer: Amazon PDF Library 2.1
 File size: 124 KB
 Encryption: None`,
@@ -851,7 +858,7 @@ Encryption: None`,
               </tr>
               <tr>
                 <td style="padding:6px 0;">Renewal date:</td>
-                <td style="padding:6px 0;font-weight:600;text-align:right;">23 March 2026</td>
+                <td style="padding:6px 0;font-weight:600;text-align:right;">${formatDateDMY()}</td>
               </tr>
               <tr>
                 <td style="padding:6px 0;">Amount charged:</td>
@@ -859,7 +866,7 @@ Encryption: None`,
               </tr>
               <tr>
                 <td style="padding:6px 0;">Next renewal:</td>
-                <td style="padding:6px 0;font-weight:600;text-align:right;">23 March 2027</td>
+                <td style="padding:6px 0;font-weight:600;text-align:right;">${formatDateDMY(365)}</td>
               </tr>
             </table>
           </div>
@@ -890,17 +897,9 @@ Encryption: None`,
             <p style="color:#333;font-size:14px;margin-bottom:12px;">
               Want to manage your subscription or update payment method?
             </p>
-            <a class="email-cta" href="#" title="https://amazonrenewals.com/manage-prime?ref=IT40268831&session=a1b2c3d4" style="background:#0070ba;color:white;padding:14px 48px;border-radius:8px;font-size:15px;font-weight:600;text-decoration:none;display:inline-block;box-shadow:0 2px 4px rgba(0,0,0,0.2);">
+            <a class="email-cta" href="https://amazonrenewals.com/manage-prime?ref=IT40268831&session=a1b2c3d4" title="https://amazonrenewals.com/manage-prime?ref=IT40268831&session=a1b2c3d4" style="background:#0070ba;color:white;padding:14px 48px;border-radius:8px;font-size:15px;font-weight:600;text-decoration:none;display:inline-block;box-shadow:0 2px 4px rgba(0,0,0,0.2);">
               Manage Your Prime Membership
             </a>
-          </div>
-          
-          <!-- URL Preview Box -->
-          <div style="background:#f0f0f0;border:1px solid #ccc;border-radius:4px;padding:12px;margin:20px 0;">
-            <p style="color:#555;font-size:12px;margin:0 0 6px 0;font-weight:600;">Secure Amazon URL:</p>
-            <p style="color:#0070ba;font-size:12px;margin:0;font-family:monospace;word-break:break-all;">
-              https://amazonrenewals.com/manage-prime?ref=IT40268831
-            </p>
           </div>
           
           <hr style="border:none;border-top:1px solid #e5e5e5;margin:24px 0;">
@@ -921,7 +920,7 @@ Encryption: None`,
             Amazon EU S.r.l., 38 avenue John F. Kennedy, L-1855 Luxembourg
           </p>
           <p style="color:#999;font-size:11px;text-align:center;margin:0;">
-            © 2026 Amazon Prime. All rights reserved.
+            © ${new Date().getFullYear()} Amazon Prime. All rights reserved.
           </p>
         </div>
         
@@ -932,6 +931,74 @@ Encryption: None`,
 ];
 
 // ─── APP ─────────────────────────────────────────────────────────────
+// ─── DATE HELPERS ───────────────────────────────────────────────────
+function formatDateDMY(offsetDays = 0) {
+  const date = new Date();
+  date.setDate(date.getDate() + offsetDays);
+  const d = String(date.getDate()).padStart(2, '0');
+  const m = String(date.getMonth() + 1).padStart(2, '0');
+  const y = date.getFullYear();
+  return `${d}/${m}/${y}`;
+}
+
+function formatDateEmail(offsetDays = 0) {
+  const d = new Date();
+  d.setDate(d.getDate() + offsetDays);
+  const days = ['Sun','Mon','Tue','Wed','Thu','Fri','Sat'];
+  const months = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+  const dayName = days[d.getDay()];
+  const day = d.getDate();
+  const month = months[d.getMonth()];
+  const year = d.getFullYear();
+  const hh = String(d.getHours()).padStart(2, '0');
+  const mm = String(d.getMinutes()).padStart(2, '0');
+  return `${dayName}, ${day} ${month} ${year} ${hh}:${mm}`;
+}
+
+function formatDateEmailShort(offsetDays = 0) {
+  const d = new Date();
+  d.setDate(d.getDate() + offsetDays);
+  const days = ['Sun','Mon','Tue','Wed','Thu','Fri','Sat'];
+  const months = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+  const dayName = days[d.getDay()];
+  const day = d.getDate();
+  const month = months[d.getMonth()];
+  const year = d.getFullYear();
+  return `${dayName}, ${day} ${month} ${year}`;
+}
+
+function formatTimestampUnix(offsetDays = 0) {
+  const d = new Date();
+  d.setDate(d.getDate() + offsetDays);
+  return Math.floor(d.getTime() / 1000);
+}
+
+function formatISODate(offsetDays = 0) {
+  const d = new Date();
+  d.setDate(d.getDate() + offsetDays);
+  const yyyy = d.getFullYear();
+  const mm = String(d.getMonth() + 1).padStart(2, '0');
+  const dd = String(d.getDate()).padStart(2, '0');
+  const hh = String(d.getHours()).padStart(2, '0');
+  const mi = String(d.getMinutes()).padStart(2, '0');
+  const ss = String(d.getSeconds()).padStart(2, '0');
+  return `${yyyy}-${mm}-${dd} ${hh}:${mi}:${ss} UTC`;
+}
+
+// Calcola la domenica scorsa alle 03:17
+function lastSundayAt0317() {
+  const now = new Date();
+  const day = now.getDay(); // 0 = Sunday
+  const diff = day === 0 ? 0 : day; // se oggi è domenica, prendi oggi
+  const sunday = new Date(now);
+  sunday.setDate(now.getDate() - diff);
+  sunday.setHours(3, 17, 0, 0);
+  const days = ['Sun','Mon','Tue','Wed','Thu','Fri','Sat'];
+  const months = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+  return `${days[sunday.getDay()]}, ${sunday.getDate()} ${months[sunday.getMonth()]} ${sunday.getFullYear()} ${String(sunday.getHours()).padStart(2,'0')}:${String(sunday.getMinutes()).padStart(2,'0')}`;
+}
+
+
 class PhishHunt {
   constructor() {
     this.player       = '';
@@ -1086,20 +1153,15 @@ reportDecision(isPhishingReport) {
     // Mostra modale di valutazione
     this.showVerdictModal(true, email);
     
-    this.updateStats();
+    // NON chiamare updateStats() qui!
     this.renderEmailList();
-    
-    // Se tutte le email sono state analizzate, aggiorna il top bar
-    if (this.completedCount === this.emails.length) {
-      this.showCompletionMessage();
-    }
   } else {
     this.score += email.scoreIfWrong;
     
     // Mostra modale di valutazione (errato)
     this.showVerdictModal(false, email);
     
-    this.updateStats();
+    // NON chiamare updateStats() qui!
   }
 }
 
@@ -1145,11 +1207,16 @@ showVerdictModal(isCorrect, email) {
   
   modal.classList.remove('hidden');
   
-  // Attacca il listener DOPO aver inserito l'HTML
   setTimeout(() => {
     const closeBtn = document.getElementById('verdictCloseBtn');
     if (closeBtn) {
-      closeBtn.onclick = () => this.closeModal('verdictModal');
+      closeBtn.onclick = () => {
+        this.closeModal('verdictModal');
+        
+        // Aggiorna punteggio e stats DOPO aver chiuso il verdict
+        this.updateStats();
+        this.renderEmailList();
+      };
     }
   }, 10);
 }
@@ -1271,24 +1338,24 @@ inspectSender() {
     return;
   }
 
-  // Livello 6 — DKIM Replay + Expired Domain (amazon-renewals.com)
+    // Livello 6 — DKIM Replay + Expired Domain (amazonrenewals.com)
   if (this.currentEmail?.urlTrigger === 'amazonrenewals.com' && domain.includes(this.currentEmail.urlTrigger)) {
     document.getElementById('urlScanContent').innerHTML = `
 <span style="color:#569cd6;">URL submitted   :</span> <span style="color:#ce9178;">${this.escapeHtml(input.substring(0, 65))}...</span>
 <span style="color:#569cd6;">Scan time       :</span> Mon, 23 Mar 2026 11:04:12 UTC
 
 <span style="color:#888;">── Domain Analysis ─────────────────────────────────</span>
-<span style="color:#569cd6;">Effective TLD+1 :</span> <span style="color:#f44747;font-weight:700;">amazonrenewals.com</span>
+<span style="color:#569cd6;">Effective TLD+1 :</span> <span style="color:#d4d4d4;font-weight:700;">amazonrenewals.com</span>
 <span style="color:#569cd6;">Subdomain       :</span> <span style="color:#dcdcaa;">manage-prime</span>
 <span style="color:#569cd6;">Registrar       :</span> GoDaddy LLC
-<span style="color:#569cd6;">Registered      :</span> <span style="color:#f44747;">2026-03-20</span> (3 days ago)
-<span style="color:#569cd6;">EXPIRED         :</span> <span style="color:#f44747;">YES — 2024-12-15</span>
-<span style="color:#569cd6;">Previous owner  :</span> <span style="color:#f44747;">Amazon.com, Inc.</span>
-<span style="color:#569cd6;">ASN             :</span> AS14618 — Amazon.com, Inc.
+<span style="color:#569cd6;">Registered      :</span> <span style="color:#dcdcaa;">2026-03-20</span> (3 days ago)
+<span style="color:#569cd6;">EXPIRED         :</span> <span style="color:#dcdcaa;">YES — 2024-12-15</span> (re-registered!)
+<span style="color:#569cd6;">Previous owner  :</span> <span style="color:#dcdcaa;">Amazon.com, Inc.</span>
+<span style="color:#569cd6;">ASN             :</span> AS14618 — Amazon.com, Inc. (spoofed!)
 <span style="color:#569cd6;">IP              :</span> 54.239.28.85
 
 <span style="color:#888;">── Threat Intelligence ─────────────────────────────</span>
-<span style="color:#569cd6;">VirusTotal      :</span> <span style="color:#f44747;">3/92 engines flagged</span>
+<span style="color:#569cd6;">VirusTotal      :</span> <span style="color:#dcdcaa;">NOT YET LISTED</span>
 <span style="color:#569cd6;">PhishTank       :</span> <span style="color:#dcdcaa;">NOT YET LISTED</span>
 <span style="color:#569cd6;">Google Safe B.  :</span> <span style="color:#dcdcaa;">NOT YET FLAGGED</span>
 <span style="color:#569cd6;">URLhaus         :</span> <span style="color:#dcdcaa;">NOT LISTED</span>
@@ -1296,7 +1363,7 @@ inspectSender() {
 <span style="color:#888;">── Domain History ──────────────────────────────────</span>
 <span style="color:#569cd6;">First seen      :</span> 2019-03-15 (Amazon subdomain)
 <span style="color:#569cd6;">Expired         :</span> 2024-12-15 (Amazon let it expire)
-<span style="color:#569cd6;">Re-registered   :</span> <span style="color:#f44747;">2026-03-20</span> (3 days ago — UNKNOWN OWNER!)
+<span style="color:#569cd6;">Re-registered   :</span> <span style="color:#dcdcaa;">2026-03-20</span> (3 days ago — UNKNOWN OWNER!)
 `;
 
     document.getElementById('urlScanModal').classList.remove('hidden');
@@ -1420,9 +1487,14 @@ inspectMeta() {
   feedback.className = 'feedback-info';
 }
 
-  updateStats() {
+   updateStats() {
     document.getElementById('score').textContent = this.score;
     document.getElementById('flagCount').textContent = this.completedCount;
+
+    // Se tutte le email sono state analizzate, mostra schermata finale
+    if (this.completedCount === this.emails.length) {
+      this.showGameOver();
+    }
   }
 
   showCompletionMessage() {
@@ -1435,6 +1507,24 @@ inspectMeta() {
   // Aggiungi listener per il bottone
   document.getElementById('playAgainBtn').onclick = () => this.restart();
 }
+
+    showGameOver() {
+    const modal = document.getElementById('gameOverModal');
+    const message = document.getElementById('gameOverMessage');
+    const playAgainBtn = document.getElementById('playAgainBtn');
+
+    message.innerHTML = `
+      You analyzed all <strong>${this.emails.length}</strong> emails.<br>
+      Final score: <strong style="color:#4ec9b0;font-weight:700;">${this.score}</strong> points.
+    `;
+
+    modal.classList.remove('hidden');
+
+    playAgainBtn.onclick = () => {
+      modal.classList.add('hidden');
+      this.restart();
+    };
+  }
 
   gameOver(msg) {
     document.getElementById('gameOverMsg').textContent = msg;
